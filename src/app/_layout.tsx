@@ -1,8 +1,9 @@
-import { View, Text } from "react-native";
+import { StatusBar } from "react-native";
 import React, { useEffect } from "react";
 import { SplashScreen, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { Amiri_400Regular } from "@expo-google-fonts/amiri";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -14,8 +15,8 @@ SplashScreen.preventAutoHideAsync();
 
 const useInitFonts = () => {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
+    Poppins_400Regular,
+    Amiri_400Regular,
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -43,9 +44,10 @@ function Layout() {
 
   return (
     <>
-      <Tabs>
-        <Tabs.Screen name="index" options={{ title: "home" }} />
+      <Tabs screenOptions={{ headerShown: false }}>
+        <Tabs.Screen name="index" />
       </Tabs>
+      <StatusBar translucent={false} />
     </>
   );
 }

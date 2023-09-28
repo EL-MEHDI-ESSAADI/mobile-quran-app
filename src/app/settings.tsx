@@ -3,8 +3,8 @@ import React from "react";
 
 function Settings() {
   return (
-    <View>
-      <Text>Settings</Text>
+    <View className="flex-1">
+      <Text className="text-4xl font-poppins">Settings</Text>
     </View>
   );
 }

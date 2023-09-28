@@ -8,6 +8,12 @@ overrides:
   react-refresh: ~0.14.0
 
 dependencies:
+  '@expo-google-fonts/amiri':
+    specifier: ^0.2.3
+    version: 0.2.3
+  '@expo-google-fonts/poppins':
+    specifier: ^0.2.3
+    version: 0.2.3
   '@expo/vector-icons':
     specifier: ^13.0.0
     version: 13.0.0
@@ -1567,6 +1573,14 @@ packages:
     engines: {node: '>=0.8.0'}
     dependencies:
       '@types/hammerjs': 2.0.42
+    dev: false
+
+  /@expo-google-fonts/amiri@0.2.3:
+    resolution: {integrity: sha512-kjyddy14Jvvnw0kFn5SRItu8QdEVyuPF908eOfLv6+9wWi5wVgQMpQsYz94gcoEojFsEb6suNB8M+jWId7eRCw==}
+    dev: false
+
+  /@expo-google-fonts/poppins@0.2.3:
+    resolution: {integrity: sha512-PXkur1ZY/puy1PwVFYPJx8qiI3dtBzC2ig1bo53swCt7/sI7krCGYRO6hLBNp15M0kcNh2J4cCR9ZQyFxsving==}
     dev: false
 
   /@expo/bunyan@4.0.0:
