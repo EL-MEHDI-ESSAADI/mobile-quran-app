@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "quran-for-you",
-    "slug": "quran-for-you",
+    "name": "Quran Zone",
+    "slug": "quran-zone",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

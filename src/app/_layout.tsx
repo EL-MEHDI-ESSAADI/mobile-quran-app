@@ -1,9 +1,14 @@
-import { StatusBar } from "react-native";
 import React, { useEffect } from "react";
-import { SplashScreen, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
+import { SplashScreen, Tabs } from "expo-router";
+import { StatusBar } from "react-native";
+
 import { Poppins_400Regular } from "@expo-google-fonts/poppins";
 import { Amiri_400Regular } from "@expo-google-fonts/amiri";
+import { colors } from "@/constants";
+
+import BookmarkIcon from "@/components/bookmark-icon";
+import HomeIcon from "@/components/home-icon";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -44,10 +49,39 @@ function Layout() {
 
   return (
     <>
-      <Tabs screenOptions={{ headerShown: false }}>
-        <Tabs.Screen name="index" />
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: colors.secondary,
+            borderColor: colors.secondary,
+          },
+        }}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <HomeIcon active={focused} />
+            ),
+            tabBarShowLabel: false,
+          }}
+        />
+        <Tabs.Screen
+          name="bookmarks"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <BookmarkIcon active={focused} />
+            ),
+            tabBarShowLabel: false,
+          }}
+        />
       </Tabs>
-      <StatusBar translucent={false} />
+      <StatusBar
+        translucent={false}
+        backgroundColor={colors.background}
+        barStyle="light-content"
+      />
     </>
   );
 }
