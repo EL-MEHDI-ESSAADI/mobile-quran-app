@@ -8,7 +8,9 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: "Poppins_400Regular",
+        "poppins-medium": "Poppins_500Medium",
         amiri: "Amiri_400Regular",
+        "amiri-bold": "Amiri_700Bold",
       },
       colors: {
         background: "#040C23",
@@ -21,6 +23,9 @@ module.exports = {
         },
         muted: {
           DEFAULT: "#A19CC5",
+        },
+        border: {
+          DEFAULT: "#7B80AD59",
         },
       },
     },

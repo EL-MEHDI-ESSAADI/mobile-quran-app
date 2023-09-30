@@ -3,8 +3,14 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Tabs } from "expo-router";
 import { StatusBar } from "react-native";
 
-import { Poppins_400Regular } from "@expo-google-fonts/poppins";
-import { Amiri_400Regular } from "@expo-google-fonts/amiri";
+import {
+  Poppins_400Regular,
+  Poppins_500Medium,
+} from "@expo-google-fonts/poppins";
+import {
+  Amiri_400Regular,
+  Amiri_700Bold,
+} from "@expo-google-fonts/amiri";
 import { colors } from "@/constants";
 
 import BookmarkIcon from "@/components/bookmark-icon";
@@ -21,7 +27,9 @@ SplashScreen.preventAutoHideAsync();
 const useInitFonts = () => {
   const [loaded, error] = useFonts({
     Poppins_400Regular,
+    Poppins_500Medium,
     Amiri_400Regular,
+    Amiri_700Bold,
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
