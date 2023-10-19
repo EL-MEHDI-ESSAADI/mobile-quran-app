@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useFonts } from "expo-font";
 import { SplashScreen, Tabs } from "expo-router";
 import { StatusBar } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 import {
   Poppins_400Regular,
@@ -84,7 +85,21 @@ function Layout() {
             tabBarShowLabel: false,
           }}
         />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="settings-outline"
+                size={24}
+                color={focused ? colors.primary : colors.muted}
+              />
+            ),
+            tabBarShowLabel: false,
+          }}
+        />
       </Tabs>
+
       <StatusBar
         translucent={false}
         backgroundColor={colors.background}
