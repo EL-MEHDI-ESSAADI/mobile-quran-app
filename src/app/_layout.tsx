@@ -7,6 +7,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   Poppins_400Regular,
   Poppins_500Medium,
+  Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 import {
   Amiri_400Regular,
@@ -29,6 +30,7 @@ const useInitFonts = () => {
   const [loaded, error] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
+    Poppins_700Bold,
     Amiri_400Regular,
     Amiri_700Bold,
   });
@@ -95,6 +97,13 @@ function Layout() {
                 color={focused ? colors.primary : colors.muted}
               />
             ),
+            tabBarShowLabel: false,
+          }}
+        />
+        <Tabs.Screen
+          name="reciters"
+          options={{
+            href: null,
             tabBarShowLabel: false,
           }}
         />

@@ -1,5 +1,6 @@
-import { View, Text, Switch } from "react-native";
+import { View, Text, Switch, Pressable } from "react-native";
 import React from "react";
+import { Link } from "expo-router";
 
 import AntDesignIcons from "@expo/vector-icons/AntDesign";
 import ScrollWrapper from "@/components/scroll-wrapper";
@@ -36,21 +37,23 @@ function Settings() {
       <Text className="text-2xl text-foreground font-poppins mb-3">
         Audio
       </Text>
-      <View className="bg-secondary px-2 py-3 rounded-lg flex-row justify-between items-center mb-6">
-        <View>
-          <Text className="text-muted text-base font-poppins">
-            Selected Reciter
-          </Text>
-          <Text className="text-primary font-poppins text-lg">
-            {selectedReciter.name}
-          </Text>
-        </View>
-        <AntDesignIcons
-          name="right"
-          size={24}
-          color={colors.muted}
-        />
-      </View>
+      <Link href="/reciters" asChild>
+        <Pressable className="bg-secondary px-2 py-3 rounded-lg flex-row justify-between items-center mb-6">
+          <View>
+            <Text className="text-muted text-base font-poppins">
+              Selected Reciter
+            </Text>
+            <Text className="text-primary font-poppins text-lg">
+              {selectedReciter.name}
+            </Text>
+          </View>
+          <AntDesignIcons
+            name="right"
+            size={24}
+            color={colors.muted}
+          />
+        </Pressable>
+      </Link>
       <View className="flex-row justify-between itmes-center">
         <Text className="text-xl text-foreground font-poppins">
           Auto Scroll
