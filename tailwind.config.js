@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+// TODO: use colors from styles file in the theme, to have one global place of colors
+
 module.exports = {
   content: [
     "./App.{js,jsx,ts,tsx}",

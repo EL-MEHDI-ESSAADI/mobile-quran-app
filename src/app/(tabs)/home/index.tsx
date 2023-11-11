@@ -12,7 +12,7 @@ import Fuse from "fuse.js";
 
 import { colors } from "@/constants";
 import { surahsOverview } from "@/data";
-import ScrollWrapper from "@/components/scroll-wrapper";
+import { Wrapper } from "@/components/wrapper";
 
 const fuse = new Fuse(surahsOverview, {
   keys: ["name", "englishName", "englishNameTranslation"],
@@ -46,34 +46,41 @@ const useSurahs = () => {
 function Home() {
   const [surahs, filterSurahs] = useSurahs();
 
+  function renderHeader() {
+    return (
+      <>
+        <Image
+          source={require("assets/images/quran.png")}
+          className="mx-auto mt-6 mb-4 h-36 w-auto"
+          resizeMode="contain"
+        />
+        <View className="flex-row bg-secondary px-5 py-4 rounded-xl space-x-2 mb-6 items-center">
+          <TextInput
+            className="flex-1 text-sm text-foreground font-poppins"
+            placeholder="Search"
+            placeholderTextColor={colors.muted}
+            onChangeText={filterSurahs}
+          />
+          <Icon
+            name="md-search-outline"
+            size={24}
+            color={colors.foreground}
+          />
+        </View>
+      </>
+    );
+  }
+
   return (
-    <ScrollWrapper>
-      <Image
-        source={require("assets/images/quran.png")}
-        className="mx-auto mt-6 mb-4 h-36 w-auto"
-        resizeMode="contain"
-      />
-      <View className="flex-row bg-secondary px-5 py-4 rounded-xl space-x-2 mb-6 items-center">
-        <TextInput
-          className="flex-1 text-sm text-foreground font-poppins"
-          placeholder="Search"
-          placeholderTextColor={colors.muted}
-          onChangeText={filterSurahs}
-        />
-        <Icon
-          name="md-search-outline"
-          size={24}
-          color={colors.foreground}
-        />
-      </View>
+    <Wrapper className="bg-background">
       <FlatList
-        className="mb-2"
-        scrollEnabled={false}
         data={surahs}
+        keyboardShouldPersistTaps="handled"
         keyExtractor={(surah) => surah.number.toString()}
         ItemSeparatorComponent={() => (
-          <View className=" my-4 border-t border-border" />
+          <View className="my-4 border-t border-border" />
         )}
+        ListHeaderComponent={renderHeader()}
         renderItem={({ item: surah }) => {
           return (
             <View className="flex-row space-x-1 justify-between items-center">
@@ -87,7 +94,7 @@ function Home() {
                   </Text>
                 </ImageBackground>
                 <View className="space-y-1">
-                  <Text className="text-foreground font-poppins-medium text-base">
+                  <Text className="text-test font-poppins-medium text-base">
                     {surah.englishName}
                   </Text>
                   <Text className="text-muted text-xs font-poppins-medium uppercase">
@@ -102,7 +109,7 @@ function Home() {
           );
         }}
       />
-    </ScrollWrapper>
+    </Wrapper>
   );
 }
 
