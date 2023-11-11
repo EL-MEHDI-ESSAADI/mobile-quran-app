@@ -37,7 +37,7 @@ function Settings() {
       <Text className="text-2xl text-foreground font-poppins mb-3">
         Audio
       </Text>
-      <Link href="/reciters" asChild>
+      <Link href="/settings/reciters" asChild>
         <Pressable className="bg-secondary px-2 py-3 rounded-lg flex-row justify-between items-center mb-6">
           <View>
             <Text className="text-muted text-base font-poppins">

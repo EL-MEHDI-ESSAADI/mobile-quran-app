@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { useFonts } from "expo-font";
-import { SplashScreen, Tabs } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { useFonts } from "expo-font";
 
 import {
   Poppins_400Regular,
@@ -14,9 +13,6 @@ import {
   Amiri_700Bold,
 } from "@expo-google-fonts/amiri";
 import { colors } from "@/constants";
-
-import BookmarkIcon from "@/components/bookmark-icon";
-import HomeIcon from "@/components/home-icon";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,9 +42,7 @@ const useInitFonts = () => {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  if (!loaded) return null;
 
   return loaded;
 };
@@ -60,55 +54,9 @@ function Layout() {
 
   return (
     <>
-      <Tabs
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            backgroundColor: colors.secondary,
-            borderColor: colors.secondary,
-          },
-        }}
-      >
-        <Tabs.Screen
-          name="index"
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <HomeIcon active={focused} />
-            ),
-            tabBarShowLabel: false,
-          }}
-        />
-        <Tabs.Screen
-          name="bookmarks"
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <BookmarkIcon active={focused} />
-            ),
-            tabBarShowLabel: false,
-          }}
-        />
-        <Tabs.Screen
-          name="settings"
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name="settings-outline"
-                size={24}
-                color={focused ? colors.primary : colors.muted}
-              />
-            ),
-            tabBarShowLabel: false,
-          }}
-        />
-        <Tabs.Screen
-          name="reciters"
-          options={{
-            href: null,
-            tabBarShowLabel: false,
-          }}
-        />
-      </Tabs>
-
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+      </Stack>
       <StatusBar
         translucent={false}
         backgroundColor={colors.background}
