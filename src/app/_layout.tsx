@@ -61,6 +61,7 @@ function Layout() {
     <>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="surah/[number]" />
       </Stack>
       <StatusBar
         translucent={false}

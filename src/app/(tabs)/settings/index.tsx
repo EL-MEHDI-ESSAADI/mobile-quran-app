@@ -1,12 +1,60 @@
-import { View, Text, Switch, Pressable } from "react-native";
+import { Href, Link } from "expo-router";
 import React from "react";
-import { Link } from "expo-router";
+import {
+  Pressable,
+  Switch,
+  Text,
+  View,
+  ViewStyle,
+} from "react-native";
 
-import AntDesignIcons from "@expo/vector-icons/AntDesign";
-import { colors } from "@/styles/index.cjs";
-import { useStore } from "@/store";
 import { CustomScrollView } from "@/components/custom-scroll-view";
 import { Wrapper } from "@/components/wrapper";
+import { useStore } from "@/store";
+import { colors } from "@/styles/index.cjs";
+import AntDesignIcons from "@expo/vector-icons/AntDesign";
+import { styled } from "nativewind";
+
+const SettingLink = styled(
+  ({
+    title,
+    name,
+    value,
+    href,
+    style,
+  }: {
+    title: string;
+    style?: ViewStyle;
+    name: string;
+    value: string;
+    href: Href<string>;
+  }) => {
+    return (
+      <View style={style}>
+        <Text className="text-2xl text-foreground font-poppins mb-3">
+          {title}
+        </Text>
+        <Link href={href} asChild>
+          <Pressable className="bg-secondary px-2 py-3 rounded-lg flex-row justify-between items-center">
+            <View>
+              <Text className="text-muted text-base font-poppins">
+                {name}
+              </Text>
+              <Text className="text-primary font-poppins text-lg">
+                {value}
+              </Text>
+            </View>
+            <AntDesignIcons
+              name="right"
+              size={24}
+              color={colors.muted}
+            />
+          </Pressable>
+        </Link>
+      </View>
+    );
+  }
+);
 
 function Settings() {
   const {
@@ -18,44 +66,20 @@ function Settings() {
   return (
     <CustomScrollView>
       <Wrapper>
-        <Text className="text-2xl text-foreground font-poppins mt-4 mb-3">
-          Translations
-        </Text>
-        <View className="bg-secondary px-2 py-3 rounded-lg flex-row justify-between items-center mb-3">
-          <View>
-            <Text className="text-muted text-base font-poppins">
-              Selected Translation
-            </Text>
-            <Text className="text-primary font-poppins text-lg">
-              {selectedTranslation.name}
-            </Text>
-          </View>
-          <AntDesignIcons
-            name="right"
-            size={24}
-            color={colors.muted}
-          />
-        </View>
-        <Text className="text-2xl text-foreground font-poppins mb-3">
-          Audio
-        </Text>
-        <Link href="/settings/reciters" asChild>
-          <Pressable className="bg-secondary px-2 py-3 rounded-lg flex-row justify-between items-center mb-6">
-            <View>
-              <Text className="text-muted text-base font-poppins">
-                Selected Reciter
-              </Text>
-              <Text className="text-primary font-poppins text-lg">
-                {selectedReciter.name}
-              </Text>
-            </View>
-            <AntDesignIcons
-              name="right"
-              size={24}
-              color={colors.muted}
-            />
-          </Pressable>
-        </Link>
+        <SettingLink
+          className="mt-4 mb-3"
+          title="Translations"
+          name="Selected Translation"
+          value={selectedTranslation.name}
+          href="/settings/reciters"
+        />
+        <SettingLink
+          className="mb-6"
+          title="Audio"
+          name="Selected Reciter"
+          value={selectedReciter.name}
+          href="/settings/reciters"
+        />
         <View className="flex-row justify-between itmes-center">
           <Text className="text-xl text-foreground font-poppins">
             Auto Scroll

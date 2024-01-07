@@ -16,6 +16,7 @@ function Layout() {
           tabBarStyle: {
             backgroundColor: colors.secondary,
             borderColor: colors.secondary,
+            height: 60,
           },
         }}
       >
