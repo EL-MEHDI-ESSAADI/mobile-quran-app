@@ -5,7 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import BookmarkIcon from "@/components/icons/bookmark-icon";
 import HomeIcon from "@/components/icons/home-icon";
 
-import { colors } from "@/constants";
+import { colors } from "@/styles/index.cjs";
 
 function Layout() {
   return (
@@ -20,7 +20,7 @@ function Layout() {
         }}
       >
         <Tabs.Screen
-          name="home"
+          name="index"
           options={{
             tabBarIcon: ({ focused }) => (
               <HomeIcon active={focused} />

@@ -1,6 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+const { colors } = require("./src/styles/index.cjs");
 
-// TODO: use colors from styles file in the theme, to have one global place of colors
+/** @type {import('tailwindcss').Config} */
 
 module.exports = {
   content: [
@@ -16,22 +16,7 @@ module.exports = {
         amiri: "Amiri_400Regular",
         "amiri-bold": "Amiri_700Bold",
       },
-      colors: {
-        background: "#040C23",
-        foreground: "#ffffff",
-        primary: {
-          DEFAULT: "#A44AFF",
-        },
-        secondary: {
-          DEFAULT: "#121931",
-        },
-        muted: {
-          DEFAULT: "#A19CC5",
-        },
-        border: {
-          DEFAULT: "#7B80AD59",
-        },
-      },
+      colors,
     },
   },
   plugins: [],

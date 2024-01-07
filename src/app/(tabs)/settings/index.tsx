@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "expo-router";
 
 import AntDesignIcons from "@expo/vector-icons/AntDesign";
-import { colors } from "@/constants";
+import { colors } from "@/styles/index.cjs";
 import { useStore } from "@/store";
 import { CustomScrollView } from "@/components/custom-scroll-view";
 import { Wrapper } from "@/components/wrapper";

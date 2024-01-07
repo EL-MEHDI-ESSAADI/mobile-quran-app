@@ -1,6 +1,6 @@
 import React from "react";
 import Svg, { Path } from "react-native-svg";
-import { colors } from "@/constants";
+import { colors } from "@/styles/index.cjs";
 
 function HomeIcon({ active }: { active: boolean }) {
   return (

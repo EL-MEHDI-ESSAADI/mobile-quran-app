@@ -1,9 +1,6 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import React from "react";
-import { Pressable } from "react-native";
-import AntDesignIcons from "@expo/vector-icons/AntDesign";
-import { colors } from "@/constants";
-import { Stack, router } from "expo-router";
+import { Stack } from "expo-router";
 import { CustomScrollView } from "@/components/custom-scroll-view";
 import { Wrapper } from "@/components/wrapper";
 

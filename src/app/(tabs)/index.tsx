@@ -10,7 +10,7 @@ import {
 import Icon from "@expo/vector-icons/Ionicons";
 import Fuse from "fuse.js";
 
-import { colors } from "@/constants";
+import { colors } from "@/styles/index.cjs";
 import { surahsOverview } from "@/data";
 import { Wrapper } from "@/components/wrapper";
 
@@ -71,6 +71,38 @@ function Home() {
     );
   }
 
+  function renderItem({
+    item: surah,
+  }: {
+    item: (typeof surahs)[0];
+  }) {
+    return (
+      <View className="flex-row space-x-1 justify-between items-center">
+        <View className="flex-row space-x-4 items-center">
+          <ImageBackground
+            source={require("assets/images/star.png")}
+            className="w-[37px] h-[36] items-center justify-center"
+          >
+            <Text className="text-foreground text-sm font-poppins-medium">
+              {surah.number}
+            </Text>
+          </ImageBackground>
+          <View className="space-y-1">
+            <Text className="text-foreground font-poppins-medium text-base">
+              {surah.englishName}
+            </Text>
+            <Text className="text-muted text-xs font-poppins-medium uppercase">
+              {surah.numberOfAyahs} verses
+            </Text>
+          </View>
+        </View>
+        <Text className="text-primary text-xl font-amiri-bold">
+          {surah.name}
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <Wrapper className="bg-background">
       <FlatList
@@ -81,33 +113,7 @@ function Home() {
           <View className="my-4 border-t border-border" />
         )}
         ListHeaderComponent={renderHeader()}
-        renderItem={({ item: surah }) => {
-          return (
-            <View className="flex-row space-x-1 justify-between items-center">
-              <View className="flex-row space-x-4 items-center">
-                <ImageBackground
-                  source={require("assets/images/star.png")}
-                  className="w-[37px] h-[36] items-center justify-center"
-                >
-                  <Text className="text-foreground text-sm font-poppins-medium">
-                    {surah.number}
-                  </Text>
-                </ImageBackground>
-                <View className="space-y-1">
-                  <Text className="text-test font-poppins-medium text-base">
-                    {surah.englishName}
-                  </Text>
-                  <Text className="text-muted text-xs font-poppins-medium uppercase">
-                    {surah.numberOfAyahs} verses
-                  </Text>
-                </View>
-              </View>
-              <Text className="text-primary text-xl font-amiri-bold">
-                {surah.name}
-              </Text>
-            </View>
-          );
-        }}
+        renderItem={renderItem}
       />
     </Wrapper>
   );
