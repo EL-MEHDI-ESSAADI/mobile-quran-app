@@ -25,6 +25,9 @@ dependencies:
   expo-font:
     specifier: ~11.4.0
     version: 11.4.0(expo@49.0.13)
+  expo-linear-gradient:
+    specifier: ~12.3.0
+    version: 12.3.0(expo@49.0.13)
   expo-linking:
     specifier: ~5.0.2
     version: 5.0.2(expo@49.0.13)
@@ -4301,6 +4304,14 @@ packages:
 
   /expo-keep-awake@12.3.0(expo@49.0.13):
     resolution: {integrity: sha512-ujiJg1p9EdCOYS05jh5PtUrfiZnK0yyLy+UewzqrjUqIT8eAGMQbkfOn3C3fHE7AKd5AefSMzJnS3lYZcZYHDw==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.13(@babel/core@7.23.0)
+    dev: false
+
+  /expo-linear-gradient@12.3.0(expo@49.0.13):
+    resolution: {integrity: sha512-f9e+Oxe5z7fNQarTBZXilMyswlkbYWQHONVfq8MqmiEnW3h9XsxxmVJLG8uVQSQPUsbW+x1UUT/tnU6mkMWeLg==}
     peerDependencies:
       expo: '*'
     dependencies:

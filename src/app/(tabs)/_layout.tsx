@@ -2,8 +2,8 @@ import React from "react";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import BookmarkIcon from "@/components/icons/bookmark-icon";
-import HomeIcon from "@/components/icons/home-icon";
+import { BookmarkIcon } from "@/components/svgs/bookmark";
+import { HomeIcon } from "@/components/svgs/home";
 
 import { colors } from "@/styles/index.cjs";
 

@@ -15,4 +15,4 @@ function BookmarkIcon({ active }: { active: boolean }) {
   );
 }
 
-export default BookmarkIcon;
+export { BookmarkIcon };

@@ -13,4 +13,4 @@ function HomeIcon({ active }: { active: boolean }) {
   );
 }
 
-export default HomeIcon;
+export { HomeIcon };
