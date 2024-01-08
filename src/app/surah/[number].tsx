@@ -14,6 +14,13 @@ function Surah() {
   const { number: numberParam } = useLocalSearchParams();
   const surah = getSurahByNumber(Number(numberParam));
 
+  if (!surah)
+    return (
+      <View>
+        <Text>Surah not found</Text>
+      </View>
+    );
+
   function renderHeader() {
     return (
       <View className="mb-[40px]">
@@ -56,12 +63,41 @@ function Surah() {
     );
   }
 
-  if (!surah)
+  function renderItem() {
     return (
       <View>
-        <Text>Surah not found</Text>
+        <View className="bg-secondary rounded-[10px] justify-between mb-6 flex-row px-[13px] py-[10px]">
+          <Text className="rounded-full bg-primary px-[11px] py-[3px] font-poppins text-foreground text-sm">
+            1
+          </Text>
+          <View className="flex-row gap-4">
+            <FeatherIcons
+              name="share-2"
+              size={24}
+              color={colors.primary}
+            />
+            <FeatherIcons
+              name="play"
+              size={24}
+              color={colors.primary}
+            />
+
+            <FeatherIcons
+              name="bookmark"
+              size={24}
+              color={colors.primary}
+            />
+          </View>
+        </View>
+        <Text className="text-foreground text-right font-amiri-bold text-lg mb-4">
+          بسم الله الرحمن الرحيم
+        </Text>
+        <Text className="text-muted font-poppins text-base">
+          [All] praise is [due] to Allah, Lord of the worlds -
+        </Text>
       </View>
     );
+  }
 
   return (
     <Wrapper className="bg-background">
@@ -72,40 +108,7 @@ function Surah() {
         )}
         keyExtractor={(item) => item.toString()}
         ListHeaderComponent={renderHeader}
-        renderItem={() => (
-          <View>
-            <View className="bg-secondary rounded-[10px] justify-between mb-6 flex-row px-[13px] py-[10px]">
-              <Text className="rounded-full bg-primary px-[11px] py-[3px] font-poppins text-foreground text-sm">
-                1
-              </Text>
-              <View className="flex-row gap-4">
-                <FeatherIcons
-                  name="share-2"
-                  size={24}
-                  color={colors.primary}
-                />
-                <FeatherIcons
-                  name="play"
-                  size={24}
-                  color={colors.primary}
-                />
-
-                <FeatherIcons
-                  name="bookmark"
-                  size={24}
-                  color={colors.primary}
-                />
-              </View>
-            </View>
-            <Text className="text-foreground text-right font-amiri-bold text-lg mb-4">
-              بسم الله الرحمن الرحيم
-            </Text>
-            <Text className="text-muted font-poppins text-base">
-              [All] praise is [due] to Allah, Lord of the worlds
-              -
-            </Text>
-          </View>
-        )}
+        renderItem={renderItem}
       />
     </Wrapper>
   );
