@@ -13,6 +13,14 @@ import {
   Amiri_700Bold,
 } from "@expo-google-fonts/amiri";
 import { colors } from "@/styles/index.cjs";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 3 } },
+});
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -58,17 +66,22 @@ function Layout() {
   if (!isFontsLoaded) return null;
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="surah/[number]" />
+        <Stack.Screen
+          name="surah/[number]"
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
       </Stack>
       <StatusBar
         translucent={false}
         backgroundColor={colors.background}
         barStyle="light-content"
       />
-    </>
+    </QueryClientProvider>
   );
 }
 

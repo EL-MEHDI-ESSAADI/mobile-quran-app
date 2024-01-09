@@ -90,4 +90,4 @@ function QuranBg(props: SvgProps) {
     </Svg>
   );
 }
-export default QuranBg;
+export { QuranBg };

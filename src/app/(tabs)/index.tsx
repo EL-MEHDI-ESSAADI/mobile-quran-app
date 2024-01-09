@@ -79,7 +79,7 @@ function Home() {
     item: (typeof surahs)[0];
   }) {
     return (
-      <Link href="/surah/1" asChild>
+      <Link href={`/surah/${surah.number}`} asChild>
         <Pressable className="w-full flex-row space-x-1 justify-between items-center">
           <View className="flex-row space-x-4 items-center">
             <ImageBackground
