@@ -71,7 +71,7 @@ function Settings() {
           title="Translations"
           name="Selected Translation"
           value={selectedTranslation.name}
-          href="/settings/reciters"
+          href="/translations"
         />
         <SettingLink
           className="mb-6"

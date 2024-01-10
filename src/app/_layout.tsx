@@ -17,6 +17,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { Header } from "@/components/header";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 3 } },
@@ -72,6 +73,14 @@ function Layout() {
         <Stack.Screen
           name="surah/[number]"
           options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="translations"
+          options={{
+            headerShown: true,
+            header: () => <Header title="Translations" />,
             animation: "slide_from_right",
           }}
         />

@@ -9,7 +9,13 @@ import Animated, {
   withRepeat,
 } from "react-native-reanimated";
 
-function Spinner() {
+function Spinner({
+  size = 24,
+  color,
+}: {
+  size?: number;
+  color?: string;
+}) {
   const rotation = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -29,11 +35,14 @@ function Spinner() {
   }, []);
 
   return (
-    <Animated.View style={animatedStyle} className="w-[24px]">
+    <Animated.View
+      style={animatedStyle}
+      className={`w-[${size}px]`}
+    >
       <AntDesignIcon
         name="loading1"
-        size={24}
-        color={colors.foreground}
+        size={size}
+        color={color || colors.foreground}
       />
     </Animated.View>
   );

@@ -27,3 +27,15 @@ export type VersesResponse = {
     total_records: number;
   };
 };
+
+export type TranslationInfo = {
+  id: number;
+  name: string;
+  author_name: string;
+  slug: string;
+  language_name: string;
+  translated_name: {
+    name: string;
+    language_name: string;
+  };
+};

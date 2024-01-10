@@ -5,8 +5,14 @@ export const DEFAULT_RECITER = {
 
 export const DEFAULT_TRANSLATION = {
   id: 131,
-  name: "Dr. Mustafa Khattab",
-  lang: "english",
+  name: "Dr. Mustafa Khattab, the Clear Quran",
+  author_name: "Dr. Mustafa Khattab",
+  slug: "clearquran-with-tafsir",
+  language_name: "english",
+  translated_name: {
+    name: "Dr. Mustafa Khattab",
+    language_name: "english",
+  },
 };
 
 export const availableTranslationsApi = `https://api.quran.com/api/v4/resources/translations?language=eg`;

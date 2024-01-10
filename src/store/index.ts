@@ -6,6 +6,7 @@ import {
   DEFAULT_RECITER,
   DEFAULT_TRANSLATION,
 } from "@/constants";
+import { TranslationInfo } from "@/types";
 
 type ReciterType = {
   specificity?: string;
@@ -13,17 +14,14 @@ type ReciterType = {
   id: number;
 };
 
-type TranslationType = {
-  id: number;
-  name: string;
-  lang: string;
-};
-
 type StoreState = {
   autoScroll: boolean;
   selectedReciter: ReciterType;
-  selectedTranslation: TranslationType;
+  selectedTranslation: TranslationInfo;
   toggleAutoScroll: () => void;
+  setSelectedTranslation: (
+    selectedTranslation: TranslationInfo
+  ) => void;
 };
 
 export const useStore = create<StoreState>()(
@@ -34,6 +32,9 @@ export const useStore = create<StoreState>()(
       selectedTranslation: DEFAULT_TRANSLATION,
       toggleAutoScroll: () =>
         set((state) => ({ autoScroll: !state.autoScroll })),
+      setSelectedTranslation: (
+        selectedTranslation: TranslationInfo
+      ) => set(() => ({ selectedTranslation })),
     }),
     {
       name: "store",

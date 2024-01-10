@@ -1,5 +1,6 @@
 import { DEFAULT_TRANSLATION, versesApi } from "@/constants";
 import { surahsOverview } from "@/data";
+import { TranslationInfo } from "@/types";
 
 export const getSurahByNumber = (number: number) => {
   if (!number) return null;
@@ -9,22 +10,58 @@ export const getSurahByNumber = (number: number) => {
 export const getVersesApiUrl = ({
   surahNumber,
   pageNumber,
+  translationSrcId,
 }: {
   surahNumber: number;
   pageNumber: number;
+  translationSrcId: number;
 }) => {
   return versesApi
     .replace("${surahNumber}", surahNumber.toString())
     .replace("${pageNumber}", pageNumber.toString())
-    .replace(
-      "${translationSrcId}",
-      DEFAULT_TRANSLATION.id.toString()
-    );
+    .replace("${translationSrcId}", translationSrcId.toString());
 };
 
 export const stripHtmlTags = (str: string) => {
   return str.replace(/<\/?[^>]+(>|$)/g, "");
 };
 
-let str = "<sub foot_note=6565>1</sub>";
-console.log(stripHtmlTags(str)); // Output: 1
+/**
+ * Converts a list of translations to a Map object where each key is a language name and each value is an array of translations for that language.
+ * If a translation's id matches the given id, it is moved to the front of its array.
+ * If any array contains the matching translation, it is moved to the front of the map.
+ *
+ * @param list - The list of translations to convert.
+ * @param id - The id to sort by.
+ * @returns The converted Map object.
+ */
+export const convertTranslationListToMap = (
+  list: TranslationInfo[],
+  id: number
+): Map<string, TranslationInfo[]> => {
+  let map = new Map<string, TranslationInfo[]>();
+  let keyOfMatchingId: string | undefined;
+
+  list.forEach((item) => {
+    if (!map.has(item.language_name)) {
+      map.set(item.language_name, []);
+    }
+    if (item.id === id) {
+      map.get(item.language_name)!.unshift(item);
+      keyOfMatchingId = item.language_name;
+    } else {
+      map.get(item.language_name)!.push(item);
+    }
+  });
+
+  if (keyOfMatchingId) {
+    const matchingArray = map.get(keyOfMatchingId);
+    map.delete(keyOfMatchingId);
+    map = new Map([
+      [keyOfMatchingId, matchingArray!],
+      ...map.entries(),
+    ]);
+  }
+
+  return map;
+};
