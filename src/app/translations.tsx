@@ -77,7 +77,7 @@ const Translations = ({
         ([language, translations]) => {
           return (
             <View key={language}>
-              <Text className="text-foreground text-xl font-poppins-medium capitalize">
+              <Text className="text-foreground text-xl font-poppins_medium capitalize">
                 {language}
               </Text>
               {translations.map((translation) => (

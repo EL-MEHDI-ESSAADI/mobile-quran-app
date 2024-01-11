@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
-import { StatusBar } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
 import {
@@ -17,6 +17,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { RootSiblingParent } from "react-native-root-siblings";
 import { Header } from "@/components/header";
 
 const queryClient = new QueryClient({
@@ -52,7 +53,9 @@ const useInitFonts = () => {
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      setTimeout(() => {
+        SplashScreen.hideAsync();
+      }, 500);
     }
   }, [loaded]);
 
@@ -67,30 +70,38 @@ function Layout() {
   if (!isFontsLoaded) return null;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="surah/[number]"
-          options={{
-            animation: "slide_from_right",
-          }}
+    <RootSiblingParent>
+      <QueryClientProvider client={queryClient}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="surah/[number]"
+            options={{
+              animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen
+            name="verse/[key]"
+            options={{
+              animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen
+            name="translations"
+            options={{
+              headerShown: true,
+              header: () => <Header title="Translations" />,
+              animation: "slide_from_right",
+            }}
+          />
+        </Stack>
+        <StatusBar
+          translucent={true}
+          backgroundColor={colors.background}
+          style="light"
         />
-        <Stack.Screen
-          name="translations"
-          options={{
-            headerShown: true,
-            header: () => <Header title="Translations" />,
-            animation: "slide_from_right",
-          }}
-        />
-      </Stack>
-      <StatusBar
-        translucent={false}
-        backgroundColor={colors.background}
-        barStyle="light-content"
-      />
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </RootSiblingParent>
   );
 }
 

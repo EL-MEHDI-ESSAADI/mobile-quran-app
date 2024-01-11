@@ -1,4 +1,8 @@
-import { DEFAULT_TRANSLATION, versesApi } from "@/constants";
+import {
+  DEFAULT_TRANSLATION,
+  verseApi,
+  versesApi,
+} from "@/constants";
 import { surahsOverview } from "@/data";
 import { TranslationInfo } from "@/types";
 
@@ -19,6 +23,18 @@ export const getVersesApiUrl = ({
   return versesApi
     .replace("${surahNumber}", surahNumber.toString())
     .replace("${pageNumber}", pageNumber.toString())
+    .replace("${translationSrcId}", translationSrcId.toString());
+};
+
+export const getVerseApiUrl = ({
+  verseKey,
+  translationSrcId,
+}: {
+  verseKey: string;
+  translationSrcId: number;
+}) => {
+  return verseApi
+    .replace("${verseKey}", verseKey)
     .replace("${translationSrcId}", translationSrcId.toString());
 };
 

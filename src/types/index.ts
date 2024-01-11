@@ -1,3 +1,5 @@
+import { surahsOverview } from "@/data";
+
 export type Verse = {
   id: number;
   verse_number: number;
@@ -28,6 +30,10 @@ export type VersesResponse = {
   };
 };
 
+export type VerseResponse = {
+  verse: Verse;
+};
+
 export type TranslationInfo = {
   id: number;
   name: string;
@@ -39,3 +45,5 @@ export type TranslationInfo = {
     language_name: string;
   };
 };
+
+export type Surah = (typeof surahsOverview)[number];

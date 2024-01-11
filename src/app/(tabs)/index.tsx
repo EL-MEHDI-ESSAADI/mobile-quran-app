@@ -8,13 +8,15 @@ import {
   ImageBackground,
   Pressable,
 } from "react-native";
+import { Link } from "expo-router";
 import Icon from "@expo/vector-icons/Ionicons";
-import Fuse from "fuse.js";
 
+import Fuse from "fuse.js";
 import { colors } from "@/styles/index.cjs";
 import { surahsOverview } from "@/data";
+import { useStore } from "@/store";
 import { Wrapper } from "@/components/wrapper";
-import { Link } from "expo-router";
+import { Separator } from "@/components/separator";
 
 const fuse = new Fuse(surahsOverview, {
   keys: ["name", "englishName", "englishNameTranslation"],
@@ -47,6 +49,7 @@ const useSurahs = () => {
 
 function Home() {
   const [surahs, filterSurahs] = useSurahs();
+  const addToHistory = useStore((state) => state.addToHistory);
 
   function renderHeader() {
     return (
@@ -76,30 +79,34 @@ function Home() {
   function renderItem({
     item: surah,
   }: {
-    item: (typeof surahs)[0];
+    item: (typeof surahs)[number];
   }) {
     return (
-      <Link href={`/surah/${surah.number}`} asChild>
+      <Link
+        href={`/surah/${surah.number}`}
+        asChild
+        onPress={() => addToHistory(surah.number)}
+      >
         <Pressable className="w-full flex-row space-x-1 justify-between items-center">
           <View className="flex-row space-x-4 items-center">
             <ImageBackground
               source={require("assets/images/star.png")}
               className="w-[37px] h-[36] items-center justify-center"
             >
-              <Text className="text-foreground text-sm font-poppins-medium">
+              <Text className="text-foreground text-sm font-poppins_medium">
                 {surah.number}
               </Text>
             </ImageBackground>
             <View className="space-y-1">
-              <Text className="text-foreground font-poppins-medium text-base">
+              <Text className="text-foreground font-poppins_medium text-base">
                 {surah.englishName}
               </Text>
-              <Text className="text-muted text-xs font-poppins-medium uppercase">
+              <Text className="text-muted text-xs font-poppins_medium uppercase">
                 {surah.numberOfAyahs} verses
               </Text>
             </View>
           </View>
-          <Text className="text-primary text-xl font-amiri-bold">
+          <Text className="text-primary text-xl font-amiri_bold">
             {surah.name}
           </Text>
         </Pressable>
@@ -114,7 +121,7 @@ function Home() {
         keyboardShouldPersistTaps="handled"
         keyExtractor={(surah) => surah.number.toString()}
         ItemSeparatorComponent={() => (
-          <View className="my-4 border-t border-border" />
+          <Separator className="my-4" />
         )}
         ListHeaderComponent={renderHeader()}
         renderItem={renderItem}

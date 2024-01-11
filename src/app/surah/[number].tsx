@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useLocalSearchParams } from "expo-router";
 import {
   FlatList,
@@ -10,8 +9,6 @@ import {
 } from "react-native";
 import { useStore } from "@/store";
 
-import { Basmala } from "@/components/svgs/basmala";
-import { QuranBg } from "@/components/svgs/quran-bg";
 import { Wrapper } from "@/components/wrapper";
 import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
@@ -21,6 +18,8 @@ import { PageError } from "@/components/page-error";
 
 import { getSurahByNumber, getVersesApiUrl } from "@/lib/utils";
 import { type VersesResponse } from "@/types";
+import { SurahHero } from "@/components/surah-hero";
+import { QueryError } from "@/components/query-error";
 
 const useSurah = ({ surahNumber }: { surahNumber: number }) => {
   const selectedTranslation = useStore(
@@ -76,38 +75,6 @@ function Surah() {
     surahNumber,
   });
 
-  function renderHeader() {
-    return (
-      <LinearGradient
-        className="py-7 px-4 rounded-[20px] relative mb-[40px]"
-        colors={["#DF98FA", "#9055FF"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <View className="items-center relative z-20">
-          <Text className="text-foreground font-poppins-medium text-[26px] mb-1">
-            {surah?.englishName}
-          </Text>
-          <Text className="text-foreground font-poppins-medium text-base mb-4">
-            {surah?.englishNameTranslation}
-          </Text>
-          <View className="w-[200px] h-px bg-foreground opacity-[0.75] mb-4 rounded-full" />
-          <View className="flex-row items-center mb-8 gap-[5px]">
-            <Text className="text-foreground font-poppins-medium text-sm uppercase">
-              {surah?.revelationType}
-            </Text>
-            <View className="w-1 h-1 rounded-full bg-foreground opacity-[0.75]" />
-            <Text className="text-foreground font-poppins-medium text-sm uppercase">
-              {surah?.numberOfAyahs} verses
-            </Text>
-          </View>
-          <Basmala />
-        </View>
-        <QuranBg className="absolute right-0 bottom-0" />
-      </LinearGradient>
-    );
-  }
-
   function renderFooter() {
     if (!isNextPageExist()) return null;
     return (
@@ -130,20 +97,10 @@ function Surah() {
     if (isLoading) return <VersesSkeleton />;
     if (isError)
       return (
-        <View className="flex-row justify-center">
-          <Text className="text-foreground text-lg font-poppins-medium text-center">
-            Fail to load verses,{" "}
-          </Text>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            className=" rounded-md"
-            onPress={() => refetch()}
-          >
-            <Text className="text-foreground text-xl  underline font-poppins-medium">
-              Retry
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <QueryError
+          refetch={refetch}
+          text="Fail to load verses"
+        />
       );
     return null;
   }
@@ -185,7 +142,7 @@ function Surah() {
           }
           ItemSeparatorComponent={Separator}
           keyExtractor={(item) => item.id.toString()}
-          ListHeaderComponent={renderHeader}
+          ListHeaderComponent={() => <SurahHero surah={surah} />}
           renderItem={({ item }) => <Verse data={item} />}
           ListEmptyComponent={renderEmpty}
           onEndReached={handleEndReached}

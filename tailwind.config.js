@@ -1,4 +1,4 @@
-const { colors } = require("./src/styles/index.cjs");
+const { colors, fonts } = require("./src/styles/index.cjs");
 
 /** @type {import('tailwindcss').Config} */
 
@@ -9,13 +9,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        poppins: "Poppins_400Regular",
-        "poppins-medium": "Poppins_500Medium",
-        "poppins-bold": "Poppins_700Bold",
-        amiri: "Amiri_400Regular",
-        "amiri-bold": "Amiri_700Bold",
-      },
+      fontFamily: fonts,
       colors,
     },
   },

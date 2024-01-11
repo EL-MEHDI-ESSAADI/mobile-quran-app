@@ -33,7 +33,11 @@ function Layout() {
           name="bookmarks"
           options={{
             tabBarIcon: ({ focused }) => (
-              <BookmarkIcon active={focused} />
+              <BookmarkIcon
+                stroke={focused ? colors.primary : colors.muted}
+                width={33}
+                height={32}
+              />
             ),
             tabBarShowLabel: false,
           }}

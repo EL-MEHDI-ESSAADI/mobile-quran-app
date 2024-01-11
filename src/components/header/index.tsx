@@ -26,7 +26,7 @@ function Header({
       >
         <BackIcon />
       </TouchableOpacity>
-      <Text className="text-foreground font-poppins-bold text-xl ml-6">
+      <Text className="text-foreground font-poppins_bold text-xl ml-6">
         {title}
       </Text>
     </Wrapper>

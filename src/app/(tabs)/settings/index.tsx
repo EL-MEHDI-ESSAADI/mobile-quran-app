@@ -35,8 +35,8 @@ const SettingLink = styled(
           {title}
         </Text>
         <Link href={href} asChild>
-          <Pressable className="bg-secondary px-2 py-3 rounded-lg flex-row justify-between items-center">
-            <View>
+          <Pressable className="bg-secondary space-x-2 px-2 py-3 rounded-lg flex-row justify-between items-center">
+            <View className="flex-1">
               <Text className="text-muted text-base font-poppins">
                 {name}
               </Text>

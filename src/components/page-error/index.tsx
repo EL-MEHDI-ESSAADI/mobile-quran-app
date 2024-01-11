@@ -13,7 +13,7 @@ function PageError({
 
   return (
     <View className="bg-background flex-1 items-center justify-center">
-      <Text className="text-foreground text-center text-3xl font-poppins-bold mb-4">
+      <Text className="text-foreground text-center text-3xl font-poppins_bold mb-4">
         {title}
       </Text>
       <TouchableOpacity
@@ -21,7 +21,7 @@ function PageError({
         className="bg-primary px-5 py-3 rounded-md"
         onPress={retry || router.back}
       >
-        <Text className="text-foreground text-xl font-poppins-medium">
+        <Text className="text-foreground text-xl font-poppins_medium">
           {retry ? "Retry" : "Go back"}
         </Text>
       </TouchableOpacity>

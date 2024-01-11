@@ -1,6 +1,7 @@
 import { View, ViewStyle } from "react-native";
 import React from "react";
 import { styled } from "nativewind";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = {
   children: React.ReactNode;
@@ -9,9 +10,9 @@ type Props = {
 
 function Wrapper({ children, style }: Props) {
   return (
-    <View className="px-6 pb-4 flex-1" style={style}>
+    <SafeAreaView className="px-6 pb-4 flex-1" style={style}>
       {children}
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,7 +1,10 @@
-import { View } from "react-native";
+import { styled } from "nativewind";
+import { View, ViewStyle } from "react-native";
 
-function Separator() {
-  return <View className="h-px bg-border my-6" />;
+function Separator({ style }: { style?: ViewStyle }) {
+  return <View className="h-px bg-border my-6" style={style} />;
 }
 
-export { Separator };
+const StyledSeparator = styled(Separator);
+
+export { StyledSeparator as Separator };
