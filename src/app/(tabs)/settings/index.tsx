@@ -63,6 +63,7 @@ function Settings() {
     selectedReciter,
     selectedTranslation,
   } = useStore((state) => state);
+
   return (
     <CustomScrollView>
       <Wrapper>

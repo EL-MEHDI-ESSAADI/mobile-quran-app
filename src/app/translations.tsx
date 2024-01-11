@@ -113,13 +113,11 @@ function TranslationsScreen() {
     );
 
   return (
-    <>
-      <CustomScrollView>
-        <Wrapper>
-          <Translations translations={data} />
-        </Wrapper>
-      </CustomScrollView>
-    </>
+    <CustomScrollView>
+      <Wrapper>
+        <Translations translations={data} />
+      </Wrapper>
+    </CustomScrollView>
   );
 }
 

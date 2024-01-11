@@ -19,6 +19,7 @@ import {
 } from "@tanstack/react-query";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { Header } from "@/components/header";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 3 } },
@@ -72,29 +73,37 @@ function Layout() {
   return (
     <RootSiblingParent>
       <QueryClientProvider client={queryClient}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen
-            name="surah/[number]"
-            options={{
-              animation: "slide_from_right",
-            }}
-          />
-          <Stack.Screen
-            name="verse/[key]"
-            options={{
-              animation: "slide_from_right",
-            }}
-          />
-          <Stack.Screen
-            name="translations"
-            options={{
-              headerShown: true,
-              header: () => <Header title="Translations" />,
-              animation: "slide_from_right",
-            }}
-          />
-        </Stack>
+        <SafeAreaView className="flex-1">
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen
+              name="surah/[number]"
+              options={{
+                animation: "slide_from_right",
+              }}
+            />
+            <Stack.Screen
+              name="verse/[key]"
+              options={{
+                animation: "slide_from_right",
+              }}
+            />
+            <Stack.Screen
+              name="translations"
+              options={{
+                headerShown: true,
+                header: () => <Header title="Translations" />,
+                animation: "slide_from_right",
+              }}
+            />
+          </Stack>
+        </SafeAreaView>
+        {/* 
+          If I did translucent false the splash screen at first will take the space of the status bar
+          and just before the splash screen hides it will stop taking the space and shrink which is not a good UX.
+          So the only solution that I found is to make the status bar translucent and and wrap the navigator
+          with SafeAreaView so it will add a padding top to the navigator that is equal to the status bar.
+        */}
         <StatusBar
           translucent={true}
           backgroundColor={colors.background}
