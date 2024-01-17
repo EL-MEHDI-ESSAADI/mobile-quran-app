@@ -50,16 +50,16 @@ const SingleTranslation = ({
       className="mt-3 pl-3 flex-row items-center"
       onPress={() => setSelectedTranslation(translation)}
     >
-      <View className="w-5 h-5 rounded-full relative justify-center items-center bg-foreground">
+      <View className="w-5 h-5 rounded-full relative justify-center items-center bg-border dark:bg-border_dark">
         <View
           className={twJoin(
             "w-3 h-3 rounded-full absolute",
             translation.id === selectedTranslation.id &&
-              "bg-primary"
+              "bg-primary dark:bg-primary_dark"
           )}
         />
       </View>
-      <Text className="text-foreground ml-3 text-lg font-poppins">
+      <Text className="text-foreground dark:text-foreground_dark ml-3 text-lg font-poppins">
         {translation.author_name}
       </Text>
     </Pressable>
@@ -77,7 +77,7 @@ const Translations = ({
         ([language, translations]) => {
           return (
             <View key={language}>
-              <Text className="text-foreground text-xl font-poppins_medium capitalize">
+              <Text className="text-foreground dark:text-foreground_dark text-xl font-poppins_medium capitalize">
                 {language}
               </Text>
               {translations.map((translation) => (
@@ -100,7 +100,7 @@ function TranslationsScreen() {
 
   if (isLoading)
     return (
-      <View className="bg-background flex-1 items-center justify-center">
+      <View className="bg-background dark:bg-background_dark flex-1 items-center justify-center">
         <Spinner size={40} />
       </View>
     );

@@ -22,19 +22,19 @@ function SurahHero({
       end={{ x: 1, y: 1 }}
     >
       <View className="items-center relative z-20">
-        <Text className="text-foreground font-poppins_medium text-[26px] mb-1">
+        <Text className="text-background dark:text-foreground_dark font-poppins_medium text-[26px] mb-1">
           {surah?.englishName}
         </Text>
-        <Text className="text-foreground font-poppins_medium text-base mb-4">
+        <Text className="text-background dark:text-foreground_dark font-poppins_medium text-base mb-4">
           {surah?.englishNameTranslation}
         </Text>
-        <View className="w-[200px] h-px bg-foreground opacity-[0.75] mb-4 rounded-full" />
+        <View className="w-[200px] h-px bg-background dark:bg-foreground_dark opacity-[0.75] mb-4 rounded-full" />
         <View className="flex-row items-center mb-8 gap-[5px]">
-          <Text className="text-foreground font-poppins_medium text-sm uppercase">
+          <Text className="text-background dark:text-foreground_dark font-poppins_medium text-sm uppercase">
             {surah?.revelationType}
           </Text>
-          <View className="w-1 h-1 rounded-full bg-foreground opacity-[0.75]" />
-          <Text className="text-foreground font-poppins_medium text-sm uppercase">
+          <View className="w-1 h-1 rounded-full bg-background dark:text-foreground_dark opacity-[0.75]" />
+          <Text className="text-background dark:text-foreground_dark font-poppins_medium text-sm uppercase">
             {surah?.numberOfAyahs} verses
           </Text>
         </View>

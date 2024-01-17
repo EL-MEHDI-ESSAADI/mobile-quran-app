@@ -6,17 +6,33 @@ import { BookmarkIcon } from "@/components/svgs/bookmark";
 import { HomeIcon } from "@/components/svgs/home";
 
 import { colors } from "@/styles/index.cjs";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 function Layout() {
+  const { isLight } = useColorScheme();
+
+  function getTabBarIconColor(focused: boolean) {
+    return focused
+      ? isLight
+        ? colors.primary
+        : colors.primary_dark
+      : isLight
+      ? colors.muted
+      : colors.muted_dark;
+  }
+
   return (
     <>
       <Tabs
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: colors.secondary,
-            borderColor: colors.secondary,
+            backgroundColor: isLight
+              ? colors.background
+              : colors.secondary_dark,
+            borderColor: "transparent",
             height: 60,
+            elevation: 30,
           },
         }}
       >
@@ -24,7 +40,7 @@ function Layout() {
           name="index"
           options={{
             tabBarIcon: ({ focused }) => (
-              <HomeIcon active={focused} />
+              <HomeIcon fill={getTabBarIconColor(focused)} />
             ),
             tabBarShowLabel: false,
           }}
@@ -34,7 +50,7 @@ function Layout() {
           options={{
             tabBarIcon: ({ focused }) => (
               <BookmarkIcon
-                stroke={focused ? colors.primary : colors.muted}
+                stroke={getTabBarIconColor(focused)}
                 width={33}
                 height={32}
               />
@@ -49,7 +65,7 @@ function Layout() {
               <Ionicons
                 name="settings-outline"
                 size={24}
-                color={focused ? colors.primary : colors.muted}
+                color={getTabBarIconColor(focused)}
               />
             ),
             tabBarShowLabel: false,

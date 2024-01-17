@@ -1,10 +1,16 @@
 const colors = {
-  background: "#040C23",
-  foreground: "#ffffff",
-  primary: "#A44AFF",
-  secondary: "#121931",
-  muted: "#A19CC5",
-  border: "#7B80AD59",
+  background: "#ffffff",
+  foreground: "#240F4F",
+  primary: "#863ED5",
+  secondary: "#1219310D",
+  muted: "#8789A3",
+  border: "#BBC4CE59",
+  background_dark: "#040C23",
+  foreground_dark: "#ffffff",
+  primary_dark: "#A44AFF",
+  secondary_dark: "#121931",
+  muted_dark: "#A19CC5",
+  border_dark: "#7B80AD59",
 };
 
 const fonts = {

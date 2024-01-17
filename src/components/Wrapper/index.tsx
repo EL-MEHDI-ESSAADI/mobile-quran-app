@@ -9,7 +9,10 @@ type Props = {
 
 function Wrapper({ children, style }: Props) {
   return (
-    <View className="px-6 pb-4 flex-1" style={style}>
+    <View
+      className="px-6 flex-1 bg-background dark:bg-background_dark"
+      style={style}
+    >
       {children}
     </View>
   );

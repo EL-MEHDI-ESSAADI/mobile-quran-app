@@ -17,6 +17,7 @@ import { surahsOverview } from "@/data";
 import { useStore } from "@/store";
 import { Wrapper } from "@/components/wrapper";
 import { Separator } from "@/components/separator";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 const fuse = new Fuse(surahsOverview, {
   keys: ["name", "englishName", "englishNameTranslation"],
@@ -50,29 +51,36 @@ const useSurahs = () => {
 function Home() {
   const [surahs, filterSurahs] = useSurahs();
   const addToHistory = useStore((state) => state.addToHistory);
+  const { isLight } = useColorScheme();
 
   function renderHeader() {
     return (
-      <>
+      <View className="mt-6">
         <Image
           source={require("assets/images/quran.png")}
-          className="mx-auto mt-6 mb-4 h-36 w-auto"
+          className="mx-auto mb-4 h-36 w-auto"
           resizeMode="contain"
         />
-        <View className="flex-row bg-secondary px-5 py-4 rounded-xl space-x-2 mb-6 items-center">
+        <View className="flex-row bg-secondary px-5 py-4 rounded-xl space-x-2 mb-6 items-center dark:bg-secondary_dark">
           <TextInput
-            className="flex-1 text-sm text-foreground font-poppins"
+            className="flex-1 text-sm text-foreground dark:text-foreground_dark font-poppins"
             placeholder="Search"
-            placeholderTextColor={colors.muted}
+            placeholderTextColor={
+              isLight ? colors.muted : colors.muted_dark
+            }
             onChangeText={filterSurahs}
           />
           <Icon
             name="md-search-outline"
             size={24}
-            color={colors.foreground}
+            color={
+              isLight
+                ? colors.foreground
+                : colors.foreground_dark
+            }
           />
         </View>
-      </>
+      </View>
     );
   }
 
@@ -93,20 +101,20 @@ function Home() {
               source={require("assets/images/star.png")}
               className="w-[37px] h-[36] items-center justify-center"
             >
-              <Text className="text-foreground text-sm font-poppins_medium">
+              <Text className="text-foreground dark:text-foreground_dark text-sm font-poppins_medium">
                 {surah.number}
               </Text>
             </ImageBackground>
             <View className="space-y-1">
-              <Text className="text-foreground font-poppins_medium text-base">
+              <Text className="text-foreground dark:text-foreground_dark font-poppins_medium text-base">
                 {surah.englishName}
               </Text>
-              <Text className="text-muted text-xs font-poppins_medium uppercase">
+              <Text className="text-muted dark:text-muted_dark text-xs font-poppins_medium uppercase">
                 {surah.numberOfAyahs} verses
               </Text>
             </View>
           </View>
-          <Text className="text-primary text-xl font-amiri_bold">
+          <Text className="text-primary dark:text-primary_dark text-xl font-amiri_bold">
             {surah.name}
           </Text>
         </Pressable>
@@ -115,10 +123,11 @@ function Home() {
   }
 
   return (
-    <Wrapper className="bg-background">
+    <Wrapper>
       <FlatList
         data={surahs}
         keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ paddingBottom: 16 }}
         keyExtractor={(surah) => surah.number.toString()}
         ItemSeparatorComponent={() => (
           <Separator className="my-4" />

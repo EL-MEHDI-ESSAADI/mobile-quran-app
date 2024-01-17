@@ -20,6 +20,8 @@ import {
 import { RootSiblingParent } from "react-native-root-siblings";
 import { Header } from "@/components/header";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { useStore } from "@/store";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 3 } },
@@ -38,14 +40,17 @@ export const unstable_settings = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const useInitFonts = () => {
-  const [loaded, error] = useFonts({
+const useLoadFontAndStorage = () => {
+  const [isFontLoaded, error] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
     Poppins_700Bold,
     Amiri_400Regular,
     Amiri_700Bold,
   });
+  const hasHydrated = useStore((state) => state._hasHydrated);
+
+  const isLoaded = isFontLoaded && hasHydrated;
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -53,22 +58,28 @@ const useInitFonts = () => {
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
+    if (isLoaded) {
       setTimeout(() => {
         SplashScreen.hideAsync();
       }, 500);
     }
-  }, [loaded]);
+  }, [isLoaded]);
 
-  if (!loaded) return null;
-
-  return loaded;
+  return isLoaded;
 };
 
-function Layout() {
-  const isFontsLoaded = useInitFonts();
+const RootLayout = () => {
+  const { isLight, colorScheme, setColorScheme } =
+    useColorScheme();
+  const persistedTheme = useStore(
+    (state) => state.persistedTheme
+  );
 
-  if (!isFontsLoaded) return null;
+  useEffect(() => {
+    if (persistedTheme !== colorScheme) {
+      setColorScheme(persistedTheme);
+    }
+  }, []);
 
   return (
     <RootSiblingParent>
@@ -106,12 +117,22 @@ function Layout() {
         */}
         <StatusBar
           translucent={true}
-          backgroundColor={colors.background}
-          style="light"
+          backgroundColor={
+            isLight ? colors.background : colors.background_dark
+          }
+          style={isLight ? "dark" : "light"}
         />
       </QueryClientProvider>
     </RootSiblingParent>
   );
+};
+
+function Layout() {
+  const isLoaded = useLoadFontAndStorage();
+
+  if (!isLoaded) return null;
+
+  return <RootLayout />;
 }
 
 export default Layout;

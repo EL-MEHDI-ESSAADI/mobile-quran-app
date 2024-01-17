@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
   withRepeat,
 } from "react-native-reanimated";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 function Spinner({
   size = 24,
@@ -17,6 +18,7 @@ function Spinner({
   color?: string;
 }) {
   const rotation = useSharedValue(0);
+  const { isLight } = useColorScheme();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -42,7 +44,10 @@ function Spinner({
       <AntDesignIcon
         name="loading1"
         size={size}
-        color={color || colors.foreground}
+        color={
+          color ||
+          (isLight ? colors.foreground : colors.foreground_dark)
+        }
       />
     </Animated.View>
   );

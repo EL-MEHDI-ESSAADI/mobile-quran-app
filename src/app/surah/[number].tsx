@@ -135,11 +135,12 @@ function Surah() {
   return (
     <>
       {renderScreenStack()}
-      <Wrapper className="bg-background">
+      <Wrapper>
         <FlatList
           data={
             data?.pages.map((page) => page.verses).flat() || []
           }
+          contentContainerStyle={{ paddingBottom: 16 }}
           ItemSeparatorComponent={Separator}
           keyExtractor={(item) => item.id.toString()}
           ListHeaderComponent={() => <SurahHero surah={surah} />}

@@ -7,6 +7,7 @@ import {
   DEFAULT_TRANSLATION,
 } from "@/constants";
 import { TranslationInfo } from "@/types";
+import { Appearance, ColorSchemeName } from "react-native";
 
 type ReciterType = {
   specificity?: string;
@@ -22,6 +23,10 @@ type StoreState = {
   history: number[];
   // array of surah keys that the user has bookmarked
   bookmarks: string[];
+  _hasHydrated: boolean;
+  persistedTheme: ColorSchemeName;
+  setPersistedTheme: (theme: ColorSchemeName) => void;
+  setHasHydrated: (value: boolean) => void;
   toggleAutoScroll: () => void;
   setSelectedTranslation: (
     selectedTranslation: TranslationInfo
@@ -38,6 +43,16 @@ export const useStore = create<StoreState>()(
       selectedTranslation: DEFAULT_TRANSLATION,
       history: [],
       bookmarks: [],
+      _hasHydrated: false,
+      persistedTheme: Appearance.getColorScheme() || "light",
+      setPersistedTheme: (theme) => {
+        set({ persistedTheme: theme });
+      },
+      setHasHydrated: (value) => {
+        set({
+          _hasHydrated: value,
+        });
+      },
       toggleAutoScroll: () =>
         set((state) => ({ autoScroll: !state.autoScroll })),
       setSelectedTranslation: (
@@ -75,6 +90,11 @@ export const useStore = create<StoreState>()(
     {
       name: "store",
       storage: createJSONStorage(() => AsyncStorage),
+      onRehydrateStorage:
+        ({ setHasHydrated }) =>
+        (state) => {
+          setHasHydrated(true);
+        },
     }
   )
 );

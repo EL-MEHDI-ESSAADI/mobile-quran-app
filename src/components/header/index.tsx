@@ -16,7 +16,7 @@ function Header({
   const router = useRouter();
   return (
     <Wrapper
-      className="flex-row items-center pt-6 bg-background flex-none"
+      className="flex-row items-center pt-6 pb-3 flex-none"
       style={style}
     >
       <TouchableOpacity
@@ -26,7 +26,7 @@ function Header({
       >
         <BackIcon />
       </TouchableOpacity>
-      <Text className="text-foreground font-poppins_bold text-xl ml-6">
+      <Text className="text-foreground dark:text-foreground_dark font-poppins_bold text-xl ml-6">
         {title}
       </Text>
     </Wrapper>

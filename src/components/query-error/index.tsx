@@ -12,7 +12,7 @@ function QueryError({
 }) {
   return (
     <View className="flex-row justify-center">
-      <Text className="text-foreground text-lg font-poppins_medium text-center">
+      <Text className="text-foreground dark:text-foreground_dark text-lg font-poppins_medium text-center">
         {text},{" "}
       </Text>
       <TouchableOpacity
@@ -20,7 +20,7 @@ function QueryError({
         className=" rounded-md"
         onPress={refetch}
       >
-        <Text className="text-foreground text-xl  underline font-poppins_medium">
+        <Text className="text-foreground dark:text-foreground_dark text-xl  underline font-poppins_medium">
           Retry
         </Text>
       </TouchableOpacity>

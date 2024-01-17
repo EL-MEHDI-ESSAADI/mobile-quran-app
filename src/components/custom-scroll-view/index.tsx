@@ -12,8 +12,11 @@ function CustomScrollView({
   style?: ViewStyle;
 }) {
   return (
-    <View className="flex-1 bg-background" style={style}>
-      <ScrollView keyboardShouldPersistTaps="handled">
+    <View className="flex-1" style={style}>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         {children}
       </ScrollView>
     </View>

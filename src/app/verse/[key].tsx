@@ -84,7 +84,7 @@ export default function VerseScreen() {
     <>
       {renderScreenStack()}
       <CustomScrollView>
-        <Wrapper className="bg-background">
+        <Wrapper className="pb-4">
           <SurahHero surah={surah} />
           {isError && (
             <QueryError

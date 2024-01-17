@@ -24,20 +24,20 @@ const HistoryItem = ({
 
   return (
     <Link href={`/surah/${surah.number}`} asChild>
-      <Pressable className="bg-secondary p-4 rounded-lg w-40 min-h-[140px]">
+      <Pressable className="bg-secondary dark:bg-secondary_dark p-4 rounded-lg w-40 min-h-[140px]">
         <View className="flex-row justify-between mb-2 gap-2">
-          <Text className="text-primary font-poppins_medium  flex-1 text-sm">
+          <Text className="text-primary dark:text-primary_dark font-poppins_medium  flex-1 text-sm">
             {surah.englishName}
           </Text>
-          <Text className="text-foreground text-sm font-poppins_medium">
+          <Text className="text-foreground dark:text-foreground_dark text-sm font-poppins_medium">
             {surah.number}
           </Text>
         </View>
-        <Text className="text-foreground text-xs mb-2 font-poppins_medium">
+        <Text className="text-foreground dark:text-foreground_dark text-xs mb-2 font-poppins_medium">
           {surah.englishNameTranslation}
         </Text>
-        <View className="bg-background items-center justify-center rounded-sm h-20 mt-auto">
-          <Text className="text-foreground text-xl font-amiri_bold">
+        <View className="bg-background dark:bg-background_dark items-center justify-center rounded-sm h-20 mt-auto">
+          <Text className="text-foreground dark:text-foreground_dark text-xl font-amiri_bold">
             {surah.name}
           </Text>
         </View>
@@ -53,8 +53,8 @@ const BookmarkItem = ({ verseKey }: { verseKey: string }) => {
 
   return (
     <Link href={`/verse/${verseKey}`} asChild>
-      <TouchableOpacity className="px-4 py-2 bg-secondary rounded-lg">
-        <Text className="text-foreground font-poppins_medium text-base">
+      <TouchableOpacity className="px-4 py-2 bg-secondary dark:bg-secondary_dark rounded-lg">
+        <Text className="text-foreground dark:text-foreground_dark font-poppins_medium text-base">
           {surah.englishName}&nbsp;&nbsp;{verseKey}
         </Text>
       </TouchableOpacity>
@@ -66,7 +66,7 @@ const Header = styled(
   ({ title, style }: { title: string; style?: ViewStyle }) => {
     return (
       <View className="flex-row" style={style}>
-        <Text className="text-foreground border-b-2 border-primary  font-poppins_medium text-3xl">
+        <Text className="text-foreground dark:text-foreground_dark border-b-2 border-primary dark:border-primary_dark  font-poppins_medium text-3xl">
           {title}
         </Text>
       </View>
@@ -76,7 +76,7 @@ const Header = styled(
 
 const EmptyListText = ({ text }: { text: string }) => {
   return (
-    <Text className="text-foreground font-poppins_medium text-base">
+    <Text className="text-foreground dark:text-foreground_dark font-poppins_medium text-base">
       {text}
     </Text>
   );
@@ -87,7 +87,7 @@ function Bookmarks() {
   const bookmarks = useStore((state) => state.bookmarks);
 
   return (
-    <Wrapper className="pt-6 bg-background">
+    <Wrapper className="pt-6 pb-4">
       <View className="mb-7 space-y-4">
         <Header title="History" />
         <FlatList
