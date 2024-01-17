@@ -5,12 +5,17 @@
   Built with Expo, Tailwind, and React Query.
 </p>
 
-<video width="300" height="500" controls>
-  <source src="demo/main.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-
+https://github.com/EL-MEHDI-ESSAADI/mobile-quran-app/assets/79756353/a1039945-b8f5-4cd9-8fe2-1a8ce4a2be5a
 ## 🚀 How to use
+
+
+
+
+
+
+
+
+
 
 - Install with `yarn` or `npm install`.
 - Run `yarn start` or `npm run start` to try it out.
