@@ -11,7 +11,7 @@ import { useStore } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AudioRes, AudioState } from "@/types";
-import { Audio } from "expo-av";
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-av";
 import Toast from "react-native-root-toast";
 import { Spinner } from "@/components/spinner";
 
@@ -22,13 +22,7 @@ const DEFAULT_AUDIO_STATE: AudioState = {
   nextVerseKey: "",
 } as const;
 
-const useSurahAudio = ({
-  surahNumber,
-  reciterId,
-}: {
-  surahNumber: number;
-  reciterId: number;
-}) => {
+const useSurahAudio = ({ surahNumber, reciterId }: { surahNumber: number; reciterId: number }) => {
   const [audio, setAudio] = useState<Audio.SoundObject>();
   const [audioState, setAudioState] = useState<AudioState>(DEFAULT_AUDIO_STATE);
   const setAudioVerseState = useStore((state) => state.setAudioVerseState);
@@ -41,15 +35,22 @@ const useSurahAudio = ({
     queryKey: ["surah-audio", reciterId, surahNumber],
     queryFn: async () => {
       try {
-        const { data } = await axios.get<AudioRes>(
-          getAudioApiApiUrl(reciterId, surahNumber)
-        );
+        const { data } = await axios.get<AudioRes>(getAudioApiApiUrl(reciterId, surahNumber));
         const audioFile = data?.audio_files?.[0];
 
         if (!audioFile) throw new Error("No audio file found");
 
         const audio = await Audio.Sound.createAsync({
           uri: audioFile.audio_url,
+        });
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+          staysActiveInBackground: true,
+          interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+          playThroughEarpieceAndroid: false,
         });
         setAudio(audio);
         return audioFile;
@@ -106,17 +107,11 @@ const useSurahAudio = ({
         );
       });
       const activeVerseKey = audioFile?.verse_timings[activeVerseKeyIndex]?.verse_key;
-      const nextVerseKey =
-        audioFile?.verse_timings[activeVerseKeyIndex + 1]?.verse_key ?? "";
-      const prevVerseKey =
-        audioFile?.verse_timings[activeVerseKeyIndex - 1]?.verse_key ?? "";
+      const nextVerseKey = audioFile?.verse_timings[activeVerseKeyIndex + 1]?.verse_key ?? "";
+      const prevVerseKey = audioFile?.verse_timings[activeVerseKeyIndex - 1]?.verse_key ?? "";
       const updatedAudioState: AudioState = {
         position: status.positionMillis,
-        status: status.isPlaying
-          ? "playing"
-          : status.isBuffering
-            ? "buffering"
-            : "paused",
+        status: status.isPlaying ? "playing" : status.isBuffering ? "buffering" : "paused",
         prevVerseKey,
         nextVerseKey,
       };

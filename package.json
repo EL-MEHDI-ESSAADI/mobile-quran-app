@@ -5,6 +5,8 @@
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
+    "prebuild:android": "npx expo prebuild --clean --platform android",
+    "build:android": "npx expo run:android --variant release",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",

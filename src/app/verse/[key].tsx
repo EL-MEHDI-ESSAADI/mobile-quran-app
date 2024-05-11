@@ -15,17 +15,10 @@ import { Wrapper } from "@/components/wrapper";
 import { getSurahByNumber, getVerseApiUrl } from "@/lib/utils";
 import { VerseResponse } from "@/types";
 import { useStore } from "@/store";
+import { SurahAudioPlayer } from "@/components/surah-audio-player";
 
-const useVerse = ({
-  verseKey,
-  enabled,
-}: {
-  verseKey: string;
-  enabled: boolean;
-}) => {
-  const selectedTranslation = useStore(
-    (state) => state.selectedTranslation
-  );
+const useVerse = ({ verseKey, enabled }: { verseKey: string; enabled: boolean }) => {
+  const selectedTranslation = useStore((state) => state.selectedTranslation);
   const queryResult = useQuery({
     queryKey: ["verse", verseKey, selectedTranslation.id],
     async queryFn() {
@@ -58,15 +51,7 @@ export default function VerseScreen() {
       <Stack.Screen
         options={{
           headerShown: true,
-          header: () => (
-            <Header
-              title={
-                surah
-                  ? `${surah.englishName}  ${verseKey}`
-                  : "unknown"
-              }
-            />
-          ),
+          header: () => <Header title={surah ? `${surah.englishName}  ${verseKey}` : "unknown"} />,
         }}
       />
     );
@@ -86,16 +71,12 @@ export default function VerseScreen() {
       <CustomScrollView>
         <Wrapper className="pb-4">
           <SurahHero surah={surah} />
-          {isError && (
-            <QueryError
-              refetch={refetch}
-              text="Fail to load verse"
-            />
-          )}
+          {isError && <QueryError refetch={refetch} text="Fail to load verse" />}
           {isLoading && <VerseSkeleton />}
-          {data && <Verse data={data.verse} />}
+          {!!data && <Verse data={data.verse} />}
         </Wrapper>
       </CustomScrollView>
+      {!!data && <SurahAudioPlayer surahNumber={surah.number} />}
     </>
   );
 }
