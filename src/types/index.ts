@@ -47,3 +47,37 @@ export type TranslationInfo = {
 };
 
 export type Surah = (typeof surahsOverview)[number];
+
+interface VerseTimingSegment {
+  start: number;
+  end: number;
+  duration: number;
+  segments: number[][];
+}
+
+interface VerseTiming {
+  verse_key: string;
+  timestamp_from: number;
+  timestamp_to: number;
+  duration: number;
+  segments: VerseTimingSegment[];
+}
+
+interface AudioFile {
+  id: number;
+  chapter_id: number;
+  file_size: number;
+  format: string;
+  audio_url: string;
+  duration: number;
+  verse_timings: VerseTiming[];
+}
+
+export type AudioRes = { audio_files: AudioFile[] };
+
+export type AudioState = {
+  position: number;
+  status: "playing" | "paused" | "loading" | "buffering";
+  prevVerseKey: string;
+  nextVerseKey: string;
+};

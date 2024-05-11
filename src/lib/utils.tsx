@@ -1,8 +1,4 @@
-import {
-  DEFAULT_TRANSLATION,
-  verseApi,
-  versesApi,
-} from "@/constants";
+import { audioApi, verseApi, versesApi } from "@/constants";
 import { surahsOverview } from "@/data";
 import { TranslationInfo } from "@/types";
 
@@ -36,6 +32,11 @@ export const getVerseApiUrl = ({
   return verseApi
     .replace("${verseKey}", verseKey)
     .replace("${translationSrcId}", translationSrcId.toString());
+};
+export const getAudioApiApiUrl = (reciterId: number, surahNumber: number) => {
+  return audioApi
+    .replace("${reciterId}", reciterId.toString())
+    .replace("${surahId}", surahNumber.toString());
 };
 
 export const stripHtmlTags = (str: string) => {
@@ -73,11 +74,20 @@ export const convertTranslationListToMap = (
   if (keyOfMatchingId) {
     const matchingArray = map.get(keyOfMatchingId);
     map.delete(keyOfMatchingId);
-    map = new Map([
-      [keyOfMatchingId, matchingArray!],
-      ...map.entries(),
-    ]);
+    map = new Map([[keyOfMatchingId, matchingArray!], ...map.entries()]);
   }
 
   return map;
+};
+
+export const formatTime = (millis?: number) => {
+  if (!millis) return "0:00";
+
+  let seconds = Math.floor((millis / 1000) % 60);
+  let minutes = Math.floor((millis / (1000 * 60)) % 60);
+  let hours = Math.floor((millis / (1000 * 60 * 60)) % 24);
+
+  const time = `${hours ? `${hours}:` : ""}${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+  return time;
 };

@@ -18,6 +18,7 @@
         "backgroundColor": "#040C23"
       }
     },
+    "jsEngine": "hermes",
     "ios": {
       "supportsTablet": true,
       "splash": {

@@ -10,6 +10,7 @@ import { stripHtmlTags } from "@/lib/utils";
 import { useStore } from "@/store";
 import * as Clipboard from "expo-clipboard";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { Spinner } from "@/components/spinner";
 
 const BookmarkButton = ({ verseKey }: { verseKey: string }) => {
   const [bookmarks, toggleBookmark] = useStore((state) => [
@@ -24,10 +25,7 @@ const BookmarkButton = ({ verseKey }: { verseKey: string }) => {
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <BookmarkIcon
-        isFilled={isBookmarked}
-        style={{ marginLeft: 14 }}
-      />
+      <BookmarkIcon isFilled={isBookmarked} style={{ marginLeft: 14 }} />
     </TouchableOpacity>
   );
 };
@@ -38,15 +36,11 @@ const CopyButton = ({ verseText }: { verseText: string }) => {
   const onPress = async () => {
     await Clipboard.setStringAsync(verseText);
     Toast.show("Ayah copied", {
-      backgroundColor: isLight
-        ? colors.primary
-        : colors.primary_dark,
+      backgroundColor: isLight ? colors.primary : colors.primary_dark,
       shadow: true,
       textStyle: {
         fontFamily: fonts.poppins,
-        color: isLight
-          ? colors.background
-          : colors.foreground_dark,
+        color: isLight ? colors.background : colors.foreground_dark,
         fontSize: 14,
       },
     });
@@ -66,6 +60,60 @@ const CopyButton = ({ verseText }: { verseText: string }) => {
 
 function Verse({ data }: { data: VerseType }) {
   const { isLight } = useColorScheme();
+  const audioVerseSate = useStore((state) => state.audioVerseState);
+
+  function renderAudioIcon() {
+    if (!audioVerseSate || audioVerseSate.status === "loading")
+      return (
+        <FeatherIcons
+          name="play"
+          size={24}
+          color={isLight ? colors.primary : colors.primary_dark}
+        />
+      );
+
+    if (audioVerseSate.key !== data.verse_key)
+      return (
+        <FeatherIcons
+          name="play"
+          size={24}
+          color={isLight ? colors.primary : colors.primary_dark}
+          onPress={() => audioVerseSate.playVerse(data.verse_key)}
+          disabled={audioVerseSate.status === "buffering"}
+        />
+      );
+
+    switch (audioVerseSate.status) {
+      case "buffering":
+        return (
+          <Spinner
+            color={isLight ? colors.primary : colors.primary_dark}
+            loader="font-awesome5"
+          />
+        );
+      case "playing":
+        return (
+          <FeatherIcons
+            name="pause"
+            size={24}
+            color={isLight ? colors.primary : colors.primary_dark}
+            onPress={audioVerseSate.pauseAudio}
+          />
+        );
+      case "paused":
+        return (
+          <FeatherIcons
+            name="play"
+            size={24}
+            color={isLight ? colors.primary : colors.primary_dark}
+            onPress={audioVerseSate.playAudio}
+          />
+        );
+      default:
+        return null;
+    }
+  }
+
   return (
     <View>
       <View className="bg-secondary dark:bg-secondary_dark rounded-[10px] justify-between mb-6 flex-row px-[13px] py-[10px]">
@@ -73,13 +121,7 @@ function Verse({ data }: { data: VerseType }) {
           {data.verse_number}
         </Text>
         <View className="flex-row">
-          <FeatherIcons
-            name="play"
-            size={24}
-            color={
-              isLight ? colors.primary : colors.primary_dark
-            }
-          />
+          {renderAudioIcon()}
           <CopyButton verseText={data.text_imlaei} />
           <BookmarkButton verseKey={data.verse_key} />
         </View>

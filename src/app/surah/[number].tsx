@@ -1,13 +1,9 @@
 import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Stack, useLocalSearchParams } from "expo-router";
-import {
-  FlatList,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { View } from "react-native";
 import { useStore } from "@/store";
+import { SurahAudioPlayer } from "@/components/surah-audio-player";
 
 import { Wrapper } from "@/components/wrapper";
 import { Header } from "@/components/header";
@@ -20,11 +16,11 @@ import { getSurahByNumber, getVersesApiUrl } from "@/lib/utils";
 import { type VersesResponse } from "@/types";
 import { SurahHero } from "@/components/surah-hero";
 import { QueryError } from "@/components/query-error";
+import Animated from "react-native-reanimated";
+import { useCollapsingPlayer } from "@/hooks/useCollapsingPlayer";
 
 const useSurah = ({ surahNumber }: { surahNumber: number }) => {
-  const selectedTranslation = useStore(
-    (state) => state.selectedTranslation
-  );
+  const selectedTranslation = useStore((state) => state.selectedTranslation);
   const queryResult = useInfiniteQuery({
     queryKey: ["surah", surahNumber, selectedTranslation.id],
     queryFn: async ({ pageParam }) => {
@@ -48,10 +44,7 @@ const useSurah = ({ surahNumber }: { surahNumber: number }) => {
 
 const VersesSkeleton = () => {
   const NUMBER_OF_VERSES = 3;
-  const verses = Array.from(
-    { length: NUMBER_OF_VERSES },
-    (_, i) => i
-  );
+  const verses = Array.from({ length: NUMBER_OF_VERSES }, (_, i) => i);
   return verses.map((_, index) => (
     <View key={index}>
       <VerseSkeleton />
@@ -64,16 +57,10 @@ function Surah() {
   const { number: numberParam } = useLocalSearchParams();
   const surahNumber = Number(numberParam);
   const surah = getSurahByNumber(surahNumber);
-  const {
-    data,
-    isLoading,
-    isError,
-    fetchNextPage,
-    isFetching,
-    refetch,
-  } = useSurah({
+  const { data, isLoading, isError, fetchNextPage, isFetching, refetch } = useSurah({
     surahNumber,
   });
+  const { scrollHandler, animatedStyle } = useCollapsingPlayer();
 
   function renderFooter() {
     if (!isNextPageExist()) return null;
@@ -95,13 +82,7 @@ function Surah() {
 
   function renderEmpty() {
     if (isLoading) return <VersesSkeleton />;
-    if (isError)
-      return (
-        <QueryError
-          refetch={refetch}
-          text="Fail to load verses"
-        />
-      );
+    if (isError) return <QueryError refetch={refetch} text="Fail to load verses" />;
     return null;
   }
 
@@ -110,9 +91,7 @@ function Surah() {
       <Stack.Screen
         options={{
           headerShown: true,
-          header: () => (
-            <Header title={surah?.englishName || "unknown"} />
-          ),
+          header: () => <Header title={surah?.englishName || "unknown"} />,
         }}
       />
     );
@@ -120,8 +99,7 @@ function Surah() {
 
   function isNextPageExist() {
     if (!data) return false;
-    return !!data.pages[data.pages.length - 1].pagination
-      .next_page;
+    return !!data.pages[data.pages.length - 1].pagination.next_page;
   }
 
   if (!surah)
@@ -136,10 +114,8 @@ function Surah() {
     <>
       {renderScreenStack()}
       <Wrapper>
-        <FlatList
-          data={
-            data?.pages.map((page) => page.verses).flat() || []
-          }
+        <Animated.FlatList
+          data={data?.pages.map((page) => page.verses).flat() || []}
           contentContainerStyle={{ paddingBottom: 16 }}
           ItemSeparatorComponent={Separator}
           keyExtractor={(item) => item.id.toString()}
@@ -148,8 +124,12 @@ function Surah() {
           ListEmptyComponent={renderEmpty}
           onEndReached={handleEndReached}
           ListFooterComponent={renderFooter}
+          onScroll={scrollHandler}
         />
       </Wrapper>
+      <Animated.View style={[animatedStyle]}>
+        <SurahAudioPlayer surahNumber={surahNumber} />
+      </Animated.View>
     </>
   );
 }

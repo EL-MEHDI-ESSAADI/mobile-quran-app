@@ -2,17 +2,22 @@ import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-import {
-  DEFAULT_RECITER,
-  DEFAULT_TRANSLATION,
-} from "@/constants";
-import { TranslationInfo } from "@/types";
+import { DEFAULT_RECITER, DEFAULT_TRANSLATION } from "@/constants";
+import { AudioState, TranslationInfo } from "@/types";
 import { Appearance, ColorSchemeName } from "react-native";
 
 type ReciterType = {
   specificity?: string;
   name: string;
   id: number;
+};
+
+type AudioVerseState = {
+  key: string;
+  status: AudioState["status"];
+  pauseAudio: () => void;
+  playAudio: () => void;
+  playVerse: (verseKey: string) => void;
 };
 
 type StoreState = {
@@ -25,14 +30,14 @@ type StoreState = {
   bookmarks: string[];
   _hasHydrated: boolean;
   persistedTheme: ColorSchemeName;
+  audioVerseState?: AudioVerseState;
   setPersistedTheme: (theme: ColorSchemeName) => void;
   setHasHydrated: (value: boolean) => void;
   toggleAutoScroll: () => void;
-  setSelectedTranslation: (
-    selectedTranslation: TranslationInfo
-  ) => void;
+  setSelectedTranslation: (selectedTranslation: TranslationInfo) => void;
   addToHistory: (surahNumber: number) => void;
   toggleBookmark: (surahKey: string) => void;
+  setAudioVerseState: (state?: AudioVerseState) => void;
 };
 
 export const useStore = create<StoreState>()(
@@ -45,6 +50,7 @@ export const useStore = create<StoreState>()(
       bookmarks: [],
       _hasHydrated: false,
       persistedTheme: Appearance.getColorScheme() || "light",
+      audioVerseState: undefined,
       setPersistedTheme: (theme) => {
         set({ persistedTheme: theme });
       },
@@ -53,17 +59,13 @@ export const useStore = create<StoreState>()(
           _hasHydrated: value,
         });
       },
-      toggleAutoScroll: () =>
-        set((state) => ({ autoScroll: !state.autoScroll })),
-      setSelectedTranslation: (
-        selectedTranslation: TranslationInfo
-      ) => set(() => ({ selectedTranslation })),
+      toggleAutoScroll: () => set((state) => ({ autoScroll: !state.autoScroll })),
+      setSelectedTranslation: (selectedTranslation: TranslationInfo) =>
+        set(() => ({ selectedTranslation })),
       addToHistory: (surahNumber: number) => {
         set((state) => {
           // remove the surah number from the array if it exists
-          const newHistory = [...state.history].filter(
-            (item) => item !== surahNumber
-          );
+          const newHistory = [...state.history].filter((item) => item !== surahNumber);
           // add the new surah number to the beginning of the array
           newHistory.unshift(surahNumber);
           // if history length is more than 10, remove the last item
@@ -85,6 +87,9 @@ export const useStore = create<StoreState>()(
           }
           return { bookmarks: newBookmarks };
         });
+      },
+      setAudioVerseState: (state) => {
+        set({ audioVerseState: state });
       },
     }),
     {
