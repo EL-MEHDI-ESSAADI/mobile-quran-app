@@ -17,7 +17,6 @@ import { type VersesResponse } from "@/types";
 import { SurahHero } from "@/components/surah-hero";
 import { QueryError } from "@/components/query-error";
 import Animated from "react-native-reanimated";
-import { useCollapsingPlayer } from "@/hooks/useCollapsingPlayer";
 
 const useSurah = ({ surahNumber }: { surahNumber: number }) => {
   const selectedTranslation = useStore((state) => state.selectedTranslation);
@@ -60,7 +59,6 @@ function Surah() {
   const { data, isLoading, isError, fetchNextPage, isFetching, refetch } = useSurah({
     surahNumber,
   });
-  const { scrollHandler, animatedStyle } = useCollapsingPlayer();
 
   function renderFooter() {
     if (!isNextPageExist()) return null;
@@ -124,12 +122,9 @@ function Surah() {
           ListEmptyComponent={renderEmpty}
           onEndReached={handleEndReached}
           ListFooterComponent={renderFooter}
-          onScroll={scrollHandler}
         />
       </Wrapper>
-      <Animated.View style={[animatedStyle]}>
-        <SurahAudioPlayer surahNumber={surahNumber} />
-      </Animated.View>
+      <SurahAudioPlayer surahNumber={surahNumber} />
     </>
   );
 }

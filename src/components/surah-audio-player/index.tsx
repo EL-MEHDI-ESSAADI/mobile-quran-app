@@ -308,10 +308,10 @@ function SurahAudioPlayer({ surahNumber }: { surahNumber: number }) {
 
   return (
     <Wrapper
-      className="px-2 absolute w-full rounded-t-xl flex-initial bottom-0 pb-2 pt-2 elevation-[30] dark:bg-secondary_dark"
+      className="px-0 sticky bottom-0 w-full flex-initial elevation-[30] dark:bg-background_dark"
       style={{ height: QURAN_PLAYER_HEIGHT }}
     >
-      {renderContent()}
+      <View className="px-2 rounded-t-xl dark:bg-secondary_dark pt-2 pb-2">{renderContent()}</View>
     </Wrapper>
   );
 }
