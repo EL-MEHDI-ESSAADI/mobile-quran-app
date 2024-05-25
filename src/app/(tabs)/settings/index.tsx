@@ -1,12 +1,6 @@
 import { Href, Link } from "expo-router";
 import React from "react";
-import {
-  Pressable,
-  Switch,
-  Text,
-  View,
-  ViewStyle,
-} from "react-native";
+import { Pressable, Switch, Text, View, ViewStyle } from "react-native";
 
 import { CustomScrollView } from "@/components/custom-scroll-view";
 import { Wrapper } from "@/components/wrapper";
@@ -34,9 +28,7 @@ const SettingLink = styled(
         <Link href={href} asChild>
           <Pressable className="bg-secondary dark:bg-secondary_dark space-x-2 px-2 py-3 rounded-lg flex-row justify-between items-center">
             <View className="flex-1">
-              <Text className="text-muted dark:text-muted_dark text-base font-poppins">
-                {name}
-              </Text>
+              <Text className="text-muted dark:text-muted_dark text-base font-poppins">{name}</Text>
               <Text className="text-primary dark:text-primary_dark font-poppins text-lg">
                 {value}
               </Text>
@@ -67,19 +59,14 @@ const SettingToggle = styled(
   }) => {
     const { isLight } = useColorScheme();
     return (
-      <View
-        className="flex-row justify-between itmes-center items-center relative"
-        style={style}
-      >
+      <View className="flex-row justify-between itmes-center items-center relative" style={style}>
         <Text className="text-xl text-foreground dark:text-foreground_dark font-poppins">
           {title}
         </Text>
         <Switch
           value={checked}
           onChange={toggle}
-          thumbColor={
-            isLight ? colors.primary : colors.primary_dark
-          }
+          thumbColor={isLight ? colors.primary : colors.primary_dark}
           trackColor={{
             false: isLight ? colors.border : colors.border_dark,
             true: isLight ? colors.border : colors.border_dark,
@@ -90,28 +77,21 @@ const SettingToggle = styled(
   }
 );
 
-const Heading = styled(
-  ({ title, style }: { title: string; style?: ViewStyle }) => {
-    return (
-      <View className="flex-row">
-        <Text
-          className="text-2xl text-foreground font-poppins border-b-2 border-primary dark:text-foreground_dark dark:border-primary_dark"
-          style={style}
-        >
-          {title}
-        </Text>
-      </View>
-    );
-  }
-);
+const Heading = styled(({ title, style }: { title: string; style?: ViewStyle }) => {
+  return (
+    <View className="flex-row">
+      <Text
+        className="text-2xl text-foreground font-poppins border-b-2 border-primary dark:text-foreground_dark dark:border-primary_dark"
+        style={style}
+      >
+        {title}
+      </Text>
+    </View>
+  );
+});
 
 function Settings() {
-  const {
-    autoScroll,
-    toggleAutoScroll,
-    selectedReciter,
-    selectedTranslation,
-  } = useStore((state) => state);
+  const { selectedReciter, selectedTranslation } = useStore((state) => state);
   const { isLight, toggleColorScheme } = useColorScheme();
 
   return (
@@ -133,19 +113,10 @@ function Settings() {
             value={selectedReciter.name}
             href="/settings/reciters"
           />
-          <SettingToggle
-            title="Auto Scroll"
-            checked={autoScroll}
-            toggle={toggleAutoScroll}
-          />
         </View>
         <View>
           <Heading title="Appearance" className="mb-1" />
-          <SettingToggle
-            title="Dark Mode"
-            checked={!isLight}
-            toggle={toggleColorScheme}
-          />
+          <SettingToggle title="Dark Mode" checked={!isLight} toggle={toggleColorScheme} />
         </View>
       </Wrapper>
     </CustomScrollView>

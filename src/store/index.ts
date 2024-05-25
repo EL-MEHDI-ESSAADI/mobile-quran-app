@@ -21,7 +21,6 @@ type AudioVerseState = {
 };
 
 type StoreState = {
-  autoScroll: boolean;
   selectedReciter: ReciterType;
   selectedTranslation: TranslationInfo;
   // the history array is used to keep track of the last 10 surahs that the user has visited, it stores the surah number
@@ -33,8 +32,8 @@ type StoreState = {
   audioVerseState?: AudioVerseState;
   setPersistedTheme: (theme: ColorSchemeName) => void;
   setHasHydrated: (value: boolean) => void;
-  toggleAutoScroll: () => void;
   setSelectedTranslation: (selectedTranslation: TranslationInfo) => void;
+  setSelectedReciter: (selectedReciter: ReciterType) => void;
   addToHistory: (surahNumber: number) => void;
   toggleBookmark: (surahKey: string) => void;
   setAudioVerseState: (state?: AudioVerseState) => void;
@@ -43,7 +42,6 @@ type StoreState = {
 export const useStore = create<StoreState>()(
   persist(
     (set) => ({
-      autoScroll: true,
       selectedReciter: DEFAULT_RECITER,
       selectedTranslation: DEFAULT_TRANSLATION,
       history: [],
@@ -59,9 +57,9 @@ export const useStore = create<StoreState>()(
           _hasHydrated: value,
         });
       },
-      toggleAutoScroll: () => set((state) => ({ autoScroll: !state.autoScroll })),
       setSelectedTranslation: (selectedTranslation: TranslationInfo) =>
         set(() => ({ selectedTranslation })),
+      setSelectedReciter: (selectedReciter: ReciterType) => set(() => ({ selectedReciter })),
       addToHistory: (surahNumber: number) => {
         set((state) => {
           // remove the surah number from the array if it exists
